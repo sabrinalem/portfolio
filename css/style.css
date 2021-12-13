@@ -1,0 +1,30 @@
+@import url(./partials/_variables.css);
+
+
+/* NAV BAR START*/
+.header_area .main-menu .navbar .navbar-brand{
+    padding: 0 2rem 0 5rem
+}
+
+.header_area .main-menu .navbar{
+    padding: 1rem 10rem;
+}
+
+.header_area .main-menu .nav-item .nav-link{
+    font-family: "NotoSans", sans-serif;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 1rem;
+    color:var(--title-color);
+}
+
+.header_area .main-menu .navbar-nav a:hover{
+    color: var(--primary-color);
+    
+}
+/* NAV BAR END */
+
+/* SECTION1 START */
+.site .site-
+/*SECTION1 END */
+
