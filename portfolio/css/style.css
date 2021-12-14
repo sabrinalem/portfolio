@@ -1,0 +1,184 @@
+@import url(./partials/_variables.css);
+
+
+/* NAV BAR START*/
+.header_area .main-menu .navbar .navbar-brand{
+    padding: 1.5 2rem 0 5rem
+}
+
+.header_area .main-menu .navbar{
+    padding: 1rem 25rem;
+
+}
+
+.header_area .main-menu .nav-item .nav-link{
+    font-family: "NotoSans", sans-serif;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 1rem;
+    color:var(--title-color);
+}
+
+.header_area .main-menu .navbar-nav a:hover{
+    color: var(--primary-color);
+    
+}
+/* NAV BAR END */
+
+/* SECTION1 START */
+.site-main .site-banner {
+    padding-top: 10rem;
+    padding-bottom: 10rem;
+    font-weight: 500;
+}
+
+.site-main .site-banner h2, h3, h4{
+    font-family: "NotoSans", sans-serif;
+    color: white;
+}
+.site-main .site-banner h2{
+    font-size: 2rem;
+}
+.site-main .site-banner h3{
+    font-size: 2rem;
+}
+.site-main .site-banner h4{
+    font-size: 1.63rem;
+}
+
+.site-main .site-banner .site-title{
+    padding-top: 4%;
+    padding-left: 12%;
+    padding-bottom: 5%;
+}
+.site-main .site-banner .site-img{
+    padding-left: 13%;
+}
+
+.button{
+    background-color: black;
+    border: 2px solid white;
+    color: white;
+}
+.button:hover{
+    background-color: none ;
+    color: white;
+    border: 2px solid white;
+    box-shadow: var(--box-shadow);
+}
+/*SECTION1 END */
+
+/* SECTION2 START */
+.site-main .about-area{
+    padding-top: 10rem;
+    padding-bottom: 10rem;
+    
+}
+.site-main .about-area .about-image{
+    padding-left: 5rem;
+}
+.site-main .about-area .about-text{
+    color: white;
+}
+/* SECTION2 END */
+
+
+
+/* SECTION3 START */
+.site-main .eduskls-area{
+    padding-top: 10rem;
+    padding-bottom: 10rem;
+    
+}  
+.site-main .eduskls-area .eduskls-text{
+    padding-left: 7rem;
+   
+}
+.site-main .eduskls-area .eduskls-img{
+    padding-left: 4rem;
+    padding-top: -10%;
+   
+}
+
+/* SECTION3 END */
+
+
+/* SECTION4 START */
+.site-main .projects-area{
+    padding-top: 10rem;
+    padding-bottom: 10rem;
+
+}
+.site-main .projects-content{
+    height: 200px;
+    padding-top: 2rem;
+}
+.site-main .projects-image{
+    padding-left: 4rem;
+    padding-top: -8rem;
+}
+
+/* SECTION4 END */
+
+
+/* SECTION5 START */
+.site-main .contact-area{
+    padding-top: 10rem;
+    padding-bottom: 15rem;
+}
+.site-main .contact-area .contact-img{
+    padding-left: 25rem;
+}
+
+
+/* SECTION5 END */
+
+
+.email .email-hover{
+    display:none
+}
+.email:hover .email-hover{
+    display:inline
+}
+.email:hover .email-none{
+    display: none
+}
+.linked .linked-hover{
+    display:none
+}
+.linked:hover .linked-hover{
+    display:inline
+}
+.linked:hover .linked-none{
+    display: none
+}
+.git .git-hover{
+    display:none
+}
+.git:hover .git-hover{
+    display:inline
+}
+.git:hover .git-none{
+    display: none
+}
+.spotify .spotify-hover{
+    display:none
+}
+.spotify:hover .spotify-hover{
+    display:inline
+}
+.spotify:hover .spotify-none{
+    display: none
+}
+.contact-content{
+    padding-left: 5rem;
+    padding-top: 5rem;
+    padding-top: 10rem;
+}
+.contact-header{
+    padding-left: 13rem;
+}
+.contact-button{
+    padding-left: 5rem;
+}
+
