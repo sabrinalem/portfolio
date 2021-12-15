@@ -99,7 +99,6 @@
     padding-top: -10%;
    
 }
-
 /* SECTION3 END */
 
 
@@ -127,13 +126,20 @@
     padding-bottom: 15rem;
 }
 .site-main .contact-area .contact-img{
-    padding-left: 25rem;
+    padding-left: 27rem;
 }
-
-
+.contact .contact-hover{
+    display:none
+}
+.contact:hover .contact-hover{
+    display:inline
+}
+.contact:hover .contact-none{
+    display: none
+}
 /* SECTION5 END */
 
-
+/* CONTACT PG START */
 .email .email-hover{
     display:none
 }
@@ -172,13 +178,15 @@
 }
 .contact-content{
     padding-left: 5rem;
-    padding-top: 5rem;
-    padding-top: 10rem;
+    padding-top: 3rem;
 }
 .contact-header{
     padding-left: 13rem;
+    padding-bottom: 1rem;
 }
 .contact-button{
     padding-left: 5rem;
+    padding-bottom: 5rem;
 }
 
+/* CONTACT PG END */
