@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Bootstap css file -->
+    <link href="/css/bootstrap.min.css"rel="stylesheet" media="all">
+    <!--font awesome icons-->
+    <link href="/css/all.min.css" rel="stylesheet">
+
+    <!-- custom css file -->
+    <link href="/css/style.css"rel="stylesheet">
+
+    <!-- fonts-->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=NotoSans">
+</head>
+
+<body style="background-color: black;">
+    <!-- HEADER START -->
+    <header class="header_area">
+        <div class="main-menu">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                  <a class="navbar-brand" href="/js/index.html#site-banner"><img src="/img/SL-logos_transparent.png" alt="SL" height="65"></a>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/js/index.html#site-banner">Home</a>
+                          </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="/js/index.html#about-area">about me</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="/js/index.html#eduskls-area">education/Skills</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="/js/contact.html">contact</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </nav>
+        </div>
+    </header>
+    <!-- HEADER END -->
+
+    <main class="projects-main">
+        <div class="btn-group project-menu">
+            <a href="#friday" class="btn btn-primary active" aria-current="page">New Music Friday</a>
+            <a href="#playlister" class="btn btn-primary">Playlister</a>
+            <a href="#vinylshop" class="btn btn-primary">VinylShop</a>
+            <a href="#frank" class="btn btn-primary">Music as Therapy</a>
+          </div>
+        <!-- SECTION 1 START -->
+        <section id = "friday" class ="friday-project" style="background-color: black">
+            <div class="container">
+                <div class="row">
+                    <h3 class="description-text text-uppercase">New Music Friday [Python - pandas, matplotlib, R]</h3>
+                        <h2 class="content-text text-lowercase">New Music Friday is a data collection and analyzation projects. Spotify allows developers to 
+                            connect and query their very own database. Every Friday Spotify refreshes their brand Playlist "New Music Friday".
+                            I'm always mining for new artists and songs, so every Friday at 12 AM, i find myself going through every song 
+                            on the playlist. This playlist is a huge way to discover new artists, and for all I know it
+                            can be a pivotal moment in terms of exposure to get onto this playlist. 
+                            I've always been curious about Spotify's algorithms. There are plenty of details on their website about
+                            their ML techniques and neaural networks, however I wanted to conduct my own analysis. Thus, using the spotify API, I used python AND
+                            pandas dataframes to acquire some details about "New Music Friday". I want to know if there are trends in audio feautres,
+                            artist popularity, and genre in the playlists. In other words I want to know why and who makes the cut to get on this popular 
+                            playlist. 
+                            There are 3 main functions. The first compiles the Audio feautures (valence, danceability, energy, key, etc.) of each track into a dataframe. The second gets 
+                            the name of the song, artist, artist popularity, and category of artist genre into a dictionary. The last function gets the mean values
+                            of each audio feature. I run these three functions every friday when the playlist updates.
+                            Statistically, I wll treat each collection as a sample. As I gather more and more evidence, I hope to 
+                            perform some data analysis and visualization to draw some conclusions. Now, I am constructing and learning 
+                            about data analysis and visualization techniques I can use to answer my questions.
+                        </h2><br>
+                        <h2 class="content-text code-title">snippets </h2>
+                        <h2 class="content-text code-cap text-lowercase">The first function: Get audio features from each song in New Music Friday </h2>
+                        <div class="code-blk"> 
+                            <pre>
+                                <code>
+class getAudioFt():
+def __init__(self, pl_ID):
+    self.pl_ID=pl_ID
+def getTable(self):
+    tracks =[]
+    tracklist = sp.playlist_items(self.pl_ID, 
+    fields='items.track.id, items.track.artists',  offset=0,)
+    tracklist = tracklist['items']
+    for x in range(len(tracklist)):
+        if tracklist[x]['track'] == None:
+            continue
+        else:
+            tracks.append(tracklist[x]['track']['id'])
+
+    aft = sp.audio_features(tracks)
+    aft_={}
+    for x in range(len(aft)):
+        if aft[x] == None:
+                continue
+        else: 
+            aft_[aft[x]['id']]=[aft[x]['danceability'],aft[x]['energy'],
+            aft[x]['key'], aft[x]['loudness'],
+            aft[x]['mode'],aft[x]['speechiness'],aft[x]['acousticness'],
+            aft[x]['instrumentalness'],aft[x]['liveness'], aft[x]['valence'],
+            aft[x]['tempo'],aft[x]['duration_ms'], aft[x]['time_signature']]
+    df = pd.DataFrame.from_dict(aft_, orient='index', 
+                            columns=['danceability','energy','key',
+                            'loudness','mode','speechiness','acousticness','instrumentalness',
+                            'liveness','valence','tempo','duration_ms','time_signature'])
+    return df
+                                </code>
+                            </pre>
+                          </div>
+                          <h2 class="content-text code-cap text-lowercase">Example of dataframe of audio feature data acquired for one week</h2>
+                          
+                            <pre>
+                                <code>
+,danceability,energy,key,loudness,mode,speechiness,
+    acousticness,instrumentalness,liveness,valence,tempo,duration_ms,time_signature
+
+5R4Yrc2j4jw1itr4hKcN26,0.575,0.619,0,-6.663,1,0.322,0.0208,0.0,0.103,0.296,110.109,212204,5
+35uYYHfPcA5zcl8IeVXxOb,0.634,0.512,10,-7.123,0,0.117,0.0199,0.0,0.115,0.264,126.961,188486,4
+6q2siYjkPyHLD9GqXRJWQR,0.546,0.268,0,-13.547,1,0.0255,0.674,0.00811,0.14,0.236,139.973,171931,4
+5HphhcOuLFWBj9IghbrKJB,0.497,0.351,1,-9.048,0,0.0648,0.777,0.0,0.157,0.234,171.719,184242,4
+4dj1qglNo2j45K8z2sDFEY,0.491,0.85,3,-4.755,1,0.0987,0.00675,0.000985,0.118,0.648,180.027,221827,4
+2nMTBUdxkdCZWo7n3upy1e,0.747,0.848,9,-4.081,1,0.103,0.629,0.0102,0.633,0.7,128.946,187107,4
+7DF8lvLdV3htIbuTWpc7lR,0.603,0.771,9,-6.336,1,0.0627,0.194,0.0,0.13,0.332,139.988,226149,4
+3No3zHVwKadKDR00kZdmAB,0.818,0.88,6,-2.411,0,0.0577,0.0237,0.0,0.0777,0.686,94.985,144987,4
+0va4UcIcxAOf4yVpxGQWSa,0.575,0.577,0,-5.064,1,0.276,0.0887,0.0,0.647,0.505,83.434,202581,4
+2wJ1eOCIBwoQiN7xQtrTAY,0.673,0.729,0,-5.664,1,0.029,0.000983,0.000107,0.226,0.482,112.535,233588,4
+0SbcVQyMO5M68AzhX8gYaS,0.606,0.811,1,-4.785,1,0.0588,0.00251,0.0,0.164,0.578,90.076,124192,4
+0QwKxajohg1rAMMmv1AWe1,0.354,0.475,1,-9.333,0,0.0425,0.149,0.034,0.21,0.0393,114.975,217222,4
+3bP9pv7uHgCN4mzmelCIjO,0.676,0.449,2,-9.054,1,0.252,0.101,0.00846,0.0816,0.342,153.969,279326,4
+0Rq2JIejWvQ6ibgWBSTcpu,0.455,0.37,2,-8.485,1,0.0445,0.808,3.3e-06,0.386,0.178,179.815,179373,3
+0ZiZoJuytgBABtjeR9nzhE,0.417,0.517,0,-9.946,1,0.0355,0.732,0.00349,0.0992,0.281,126.877,242150,4
+5BTOOI9Cesm2UungR9HiWj,0.648,0.318,7,-8.809,1,0.0302,0.888,0.0,0.0633,0.68,113.075,188980,4
+                            ...
+                            ...
+                            ...
+                                </code>
+                            </pre>
+                        </div> 
+                        <h2 class="content-text code-cap text-lowercase">Example of the dictionary of specific details acquired for one week</h2>
+                        <div class="code-blk"> 
+                            <pre>
+                              <code>
+{"5R4Yrc2j4jw1itr4hKcN26": 
+    {"name": "Feline (with Polo G & Trippie Redd)", 
+    "coverArt": "https://i.scdn.co/image/ab67616d00001e02c820e86be3bcbc65e5b88ef0", 
+    "artist": ["Juice WRLD", "Polo G", "Trippie Redd"],
+    "artistIds": ["4MCBfE4596Uoi2O4DtmEMz", "6AgTAQt8XS6jRWi4sX7w49", "6Xgp2XMz1fhVYe7i6yNAax"], 
+    "artistPop": [94, 91, 87], 
+    "genres": ["chicago rap", "melodic rap", "chicago rap", "melodic rap", "rap", "trap"]},
+"35uYYHfPcA5zcl8IeVXxOb": 
+    {"name": "Be Free", "coverArt": "https://i.scdn.co/image/ab67616d00001e02d8950378758a465df757d048",
+    "artist": ["A Boogie Wit da Hoodie"], 
+    "artistIds": ["31W5EY0aAly4Qieq6OFu6I"], 
+    "artistPop": [85], 
+    "genres": ["melodic rap", "rap", "trap"]}, 
+"6q2siYjkPyHLD9GqXRJWQR": 
+    {"name": "Heat Lightning", 
+    "coverArt": "https://i.scdn.co/image/ab67616d00001e0251c6e367e81a638a1bddb863",
+    "artist": ["Mitski"], 
+    "artistIds": ["2uYWxilOVlUdk4oV9DvwqK"], 
+    "artistPop": [82], 
+    "genres": ["brooklyn indie", "indie pop"]}, 
+"5HphhcOuLFWBj9IghbrKJB": 
+    {"name": "Midnight River (feat. 6LACK)", 
+    "coverArt": "https://i.scdn.co/image/ab67616d00001e02972c66baa8a5213759417634", 
+    "artist": ["Pink Sweat$", "6LACK"], 
+    "artistIds": ["1W7FNibLa0O0b572tB2w7t", "4IVAbR2w4JJNJDDRFP3E83"], 
+    "artistPop": [76, 81],
+    "genres": ["bedroom soul", "chill r&b", "pop", "alternative r&b", "atl hip hop", "hip hop", "melodic rap", "r&b", "rap", "trap"]}, 
+"4dj1qglNo2j45K8z2sDFEY": 
+    {"name": "No Choice", 
+    "coverArt": "https://i.scdn.co/image/ab67616d00001e021dec26263f4f5bef64f310c2", 
+    "artist": ["Tame Impala"], 
+    "artistIds": ["5INjqkS1o8h1imAzPqGZBb"], "artistPop": [81], "genres": ["australian psych", "neo-psychedelic"]}, 
+    "2nMTBUdxkdCZWo7n3upy1e": {"name": "MENTHOL*", "coverArt": "https://i.scdn.co/image/ab67616d00001e026c556f229b055ef6888b9868", 
+    "artist": ["Jean Dawson", "Mac DeMarco"], 
+    "artistIds": ["7vNNmjV14SKQzlQAEg0BXP", "3Sz7ZnJQBIHsXLUSo0OQtM"], 
+    "artistPop": [52, 79],
+    "genres": ["modern indie pop", "edmonton indie", "lo-fi indie"]}, 
+"7DF8lvLdV3htIbuTWpc7lR": 
+    {"name": "Girl Of My Dreams (with SUGA of BTS)", 
+    "coverArt": "https://i.scdn.co/image/ab67616d00001e02c820e86be3bcbc65e5b88ef0", 
+    "artist": ["Juice WRLD", "SUGA", "BTS"], "artistIds": ["4MCBfE4596Uoi2O4DtmEMz", 
+    "0ebNdVaOfp6N0oZ1guIxM8", "3Nrfpe0tUJi4K4DXYWgMUX"], 
+    "artistPop": [94, 72, 96], 
+    "genres": ["chicago rap", "melodic rap", "k-pop", "k-pop", "k-pop boy group"]},
+                            ...
+                            ...
+                            ...
+                              </code>
+                            </pre>
+                          </div>
+                          <h2 class="content-text code-cap text-lowercase">Example of the summary statistics dataframe acquired for one week</h2>
+                          <pre>
+                              <code>
+,danceability,energy,key,loudness,mode,speechiness,acousticness,instrumentalness,liveness,valence,tempo,duration_ms,time_signature
+mean,0.63552,0.62495,5.26,-6.929009999999995,0.6,0.12485300000000002,0.24027548100000007,0.028372682900000005,0.16970100000000002,0.4882520000000001,123.10342,189507.81,3.97
+std,0.14100651750822718,0.17939062816866289,3.594664958186807,2.727000585225127,0.49236596391733084,0.11655570433544346,0.26063608656776666,0.11941329023848861,0.13665126705182312,0.22090192415859508,32.803718036432045,45634.716646296576,0.2641930729560858
+max,0.94,0.895,11.0,-1.591,1.0,0.544,0.944,0.893,0.743,0.967,208.829,321444.0,5.0
+min,0.334,0.248,0.0,-18.118,0.0,0.0249,3.41e-05,0.0,0.0402,0.0393,73.991,79550.0,3.0
+median,0.639,0.653,6.0,-6.3515,1.0,0.06565,0.1225,0.0,0.1195,0.5065,119.504,188846.5,4.0                                
+                              </code>
+                          </pre>
+                </div>
+            </div>
+        </section>    
+  <!--SECTION 1 END -->
+
+  <!-- SECTION 2 START -->
+    
+        <section id = "playlister" class ="playlister" style="background-color: black">
+            <div class="btn-group project-menu">
+                <a href="#friday" class="btn btn-primary " >New Music Friday</a>
+                <a href="#playlister" class="btn btn-primary active" aria-current="page">Playlister</a>
+                <a href="#vinylshop" class="btn btn-primary">VinylShop</a>
+                <a href="#frank" class="btn btn-primary">Music as Therapy</a>
+            </div>
+            <div class="container">
+                <h3 class="description-text text-uppercase">Playlister [Python-flask, html/css]</h2>
+                    <h2 class="content-text">Playlister is a Spotify playlist assistant. As an obsessive playlist maker, sometiimes i forget
+                        if i've already added sons to a playlist. There is nothing worse, in the art of plyalist making than having 
+                        duplicate songs or artists. Playlists need diversity!
+                        So I created an app that helps me find artist, songs, and duplicate songs
+                        in my playlist. Another feature of the spotify api allows developers to connect user data to apps. 
+                        Thus my app enables users to connect their spotify profile and run my functions across their playlists.
+                        There are three functions that use flask. I got to learn how to use flask, integrate forms, and work with data frames through this project.
+                        The first is finding duplicates either within a playlist and/or amongst several playlists.
+                        Iterations of python lists are filtered to see if any of the artist/song details match. The function returns a list of 
+                        matches. That output is displayed in the app. Similary the other two functions allow users to serch by
+                        song title or artist, and the app returns the locations of these  search criterias. One of the overarching, and most
+                        important features of the app, is that users can select the playlists they want to search from. This is important
+                        because due to limited load time on Heroku (deployment server), users should intuitevly select the playlists they 
+                        might think the duplicates/songs/artists are on. Note that long load time is due to the fact that the app must constantly
+                        call the spotify api. So if you would like to test out the app using Heroku, do not select playlist(s) that have more than
+                        300 songs to look through. Furthermore, Spotify only permits 'hobby-develpers' limited amount of users on their app,
+                        so you can request access to my app by sending me your name and email linked to spotify <a class="email-link" href="mailto: sabrinalem@ucsb.edu">here</a>
+                        My friends and i have used my app a million times now! Check out some screenshots below.
+                    </h2><br>
+                    <a href="http://flask-playlister.herokuapp.com/">
+                            <button type="button" class="btn button primary-button mr-4 to-app text-uppercase">Go to web app</button> </a> 
+                    <br><br><br>
+                    <h2 class="content-text code-title">snippets</h2>
+                    <h2 class="content-text code-cap text-lowercase">the artist search</h2>
+
+                    <pre>
+                    <code>
+@app.route('/playlists_0')  # Provide dictionary of USER PLAYLISTS 
+def playlists_0():
+    cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
+    auth_manager = spotipy.oauth2.SpotifyOAuth(client_id=config.SPOTIPY_CLIENT_ID, 
+                                                client_secret=config.SPOTIPY_CLIENT_SECRET, 
+                                                redirect_uri=config.SPOTIPY_REDIRECT_URI, 
+                                                scope= config.SCOPE,
+                                                cache_handler=cache_handler, 
+                                                show_dialog=True)
+    if not auth_manager.validate_token(cache_handler.get_cached_token()):
+        return redirect('/')
+
+    spotify = spotipy.Spotify(auth_manager=auth_manager)
+    pl = spotify.current_user_playlists()['items']
+    pl_ = {}
+    for i, item in enumerate(pl):
+        pl_.update({item['name'] : item['images'][0]['url']})
+    
+    return render_template('formCheck_0.html', 
+                            data = pl_)
+
+@app.route("/NoSelection_0")
+def noSelection_0():
+    return render_template("noSelect_0.html")
+
+@app.route('/formCheckHandler_0', methods=['GET', 'POST'])
+def formCheckHandler_0():
+    cache_handler = spotipy.cache_handler.CacheFileHandler(cache_path=session_cache_path())
+    auth_manager = spotipy.oauth2.SpotifyOAuth(client_id=config.SPOTIPY_CLIENT_ID, 
+                                                client_secret=config.SPOTIPY_CLIENT_SECRET, 
+                                                redirect_uri=config.SPOTIPY_REDIRECT_URI, 
+                                                scope= config.SCOPE,
+                                                cache_handler=cache_handler, 
+                                                show_dialog=True)
+    if not auth_manager.validate_token(cache_handler.get_cached_token()):
+        return redirect('/')
+
+    spotify = spotipy.Spotify(auth_manager=auth_manager)
+    pl = spotify.current_user_playlists()['items']
+    pl_ = {}
+    for i, item in enumerate(pl):
+        pl_.update({item['name'] : item['id']})
+    select = request.form.getlist('check[]')
+    if select == []:
+        return redirect('/NoSelection_0')
+    finalPL = [] 
+    
+    # GET USER SELECTED PLAYLISTS in a LIST
+    for i in select:
+        if i in pl_.keys():
+            x = pl_[i]
+            finalPL.append(x)
+    # GET DICTIONARY of {pl name: [tracks]}
+    keyval = []
+    for val in range(len(finalPL)):
+        tracks = getTracks(finalPL[val])
+        keyval = keyval + tracks
+    li = keyval
+    dictionary = {}
+    z = convert(li, dictionary)
+    for k in z:
+        z[k] = remove_val(z[k], None)
+    artistName = request.form.get("artistName")
+    if artistName == "":
+        return render_template("missing_01.html")
+
+    q=artistName
+    results = spotify.search(q=q, type='artist')
+    results = results['artists']['items']
+    artistId = []
+    for x in results:
+        artistId.append(x['id'])
+
+    if artistId == []:
+        return render_template("noArtist.html")
+
+    
+    for k,v in z.items():
+        for elem in range(len(v)):
+            artId = getTrackInfo_(v[elem])
+            v[elem] = (v[elem], artId)
+    match = {} 
+    for k,v in z.items():
+        match[k]=[]
+        for el in v:
+            if el[1] in artistId:
+                match[k].append(el[0])  
+            else:
+                 continue  
+                
+    info ={}
+    for m, n in match.items():
+        m_ = getPlayInfo(m)[0]
+        info[m_]={}
+        info[m_]['plURL'] = getPlayInfo(m)[1]
+        info[m_]['plOpen'] = getPlayInfo(m)[2]
+        info[m_]["tracks"]=[]
+    
+        if n == []:
+            continue
+        else:
+            for ele in n:
+                info[m_]["tracks"].append({'name':getTrackInfo(ele)[0], 'url':getTrackInfo(ele)[1], 'trackOpen':getTrackInfo(ele)[2]})
+
+    return render_template("display_02.html", info=info, artistName=artistName.upper())
+                    </code>
+                </pre>
+                <div class="row item-a1">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="playlister-img1 project-image">
+                            <img src="/img/playlister/Screen Shot 2021-12-16 at 12.48.13 PM.png" height="150">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <div class="playlister-img1-text">
+                            <h2 class="content-text">Choose which feautre<br> you want to use</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row item-a2">
+                    
+                    <div class="col-lg-6 col-md-12">
+                        <div class="playlister-img2-text">
+                            <h2 class="content-text">Choose which <br>playlists you would <br>like to run (duplicates page)</h2>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 ">
+                        <div class="playlister-img2 project-image">
+                            <img src="/img/playlister/Screen Shot 2021-12-16 at 12.48.26 PM.png" height="250">
+                        </div>
+                    </div>
+                </div>
+                <div class="row item-a3">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="playlister-img3 project-image">
+                            <img src="/img/playlister/Screen Shot 2021-12-16 at 12.49.29 PM.png" height="500" >
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <div class="playlister-img3-text">
+                            <h2 class="content-text">I used duplicates, <br>so this returns the song <br>and then the playlists <br>where the songs is duplicated</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row item-a4">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="playlister-img4-text">
+                            <h2 class="content-text">you can click on any image <br>and it will take you the respective<br> spotify linik</h2>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <div class="playlister-img4 project-image">
+                            <img src="/img/playlister/Screen Shot 2021-12-16 at 12.49.54 PM.png" height="350">
+                        </div>
+                    </div>
+                </div>
+                <div class="row item-a5">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="playlister-img5 project-image">
+                            <img src="/img/playlister/Screen Shot 2021-12-16 at 12.50.09 PM.png" height="300">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <div class="playlister-img5-text">
+                            <h2 class="content-text">for example, i clicked my Foggy, Coastin playlist, and it opened it in the spotify app</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--SECTION 2 END-->
+
+        <!--SECTION 3 START-->
+        <section id = "vinylshop" class ="vinylshop" style="background-color: black">
+            <div class="btn-group project-menu">
+                <a href="#friday" class="btn btn-primary " >New Music Friday</a>
+                <a href="#playlister" class="btn btn-primary">Playlister</a>
+                <a href="#vinylshop" class="btn btn-primary active" aria-current="page">VinylShop</a>
+                <a href="#frank" class="btn btn-primary">Music as Therapy</a>
+            </div>
+            <div class="container">
+                <h3 class="description-text text-uppercase">VinylShop [PHP, SQL, HTML] </h2>
+                    <h2 class="content-text">VinylShop if powered by Yii2 Frameworks which uses PHP scripting and java. This is an app I built to help organize my physical vinyl collection.
+                        I've acquired a couple hundred vinyl records from my parents or my own crate digging, so I made an app to keep myself organized.
+                        The Yii2 Framework usese model-view-controller architecture. Hence, the app connects and queries a sql-database. Some functions includes
+                        an 'add form' to input new records into the digitl collection. I can view and search my collection. Furthermore, I can update each entry within this app (instead of going to the SQL database)
+                        I also created some advanced searches based on sql queries that allows me to filter by decade, rpm, condition, and soon genre. Yii2 has made it easy to make this 
+                        CRUD based app, and I've certaintly improved my SQL skillset through this project. Check out some screen shots below! 
+                    </h2><br><br>    
+            <div class="row">
+                <h2 class="content-text code-title">snippets</h2>
+                <h2 class="content-text code-cap">php-sql query for albums released in the seventies</h2>
+            <pre>
+                <code>
+public function actionDecades60()
+{
+
+    $query1 = Collection::find()
+    -> select(['albumName', 'artistName', 'releaseDt'])
+    -> orderBy('releaseDt')
+    -> where(['between', 'releaseDt', "1960-01-01", "1969-12-31"]);
+    
+    
+    $dataProvider = new ActiveDataProvider([
+    'query' =>$query1,
+    'pagination' => [
+        'pageSize' => 200]
+    ]);
+
+    return $this->render('decades60', [
+
+    'dataProvider' => $dataProvider,
+    ]); 
+
+                    }
+                </code>
+            </pre>
+            <h2 class="content-text code-cap"> php-sql query for albums in "GREAT condition"</h2>
+            <pre>
+                <code>
+public function actionCondition1()
+{
+        $query9 = Collection::find()
+        -> select(['albumName', 'artistName'])
+        -> orderBy('artistName', 'albumName')
+        -> where(['conditionNow' => 1])
+        -> orwhere(['conditionNow' => 2]);
+        
+        
+        $dataProvider = new ActiveDataProvider([
+        'query' =>$query9,
+        'pagination' => [
+            'pageSize' => 200]
+        ]);
+        return $this->render('condition1', [
+        'dataProvider' => $dataProvider,
+    ]);
+}
+                </code>
+            </pre>
+        </div>
+        <div class="row item-b1">
+            <div class="col-lg-6 col-md-12">
+                <div class="vinly-img1 project-image">
+                    <img src="/img/vinylshop/Screen Shot 2021-12-16 at 1.24.35 PM.png" height="200">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="vinyl-img1-text">
+                    <h2 class="content-text">Choose which playlists you<br> would like to run (duplicates page)</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row item-b2">
+            <div class="col-lg-6 col-md-12">
+                <div class="playlister-img2-text">
+                    <h2 class="content-text">This CRUD generated form is <br>used to add to the collection <br>(input all respective details about album)</h2>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 project-image">
+                <div class="vinyl-img2">
+                    <img src="/img/vinylshop/Screen Shot 2021-12-16 at 1.24.49 PM.png" height="240" >
+                </div>
+            </div>
+            
+        </div>
+        <div class="row item-b3">
+            <div class="col-lg-6 col-md-12">
+                <div class="vinyl-img3 project-image">
+                    <img src="/img/vinylshop/Screen Shot 2021-12-16 at 1.25.02 PM.png" height="300">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="vinyl-img3-text">
+                    <h2 class="content-text">See the entire collection <br>with this CRUD generated table</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row item-b4">
+            <div class="col-lg-6 col-md-12">
+                <div class="vinyl-img4-text">
+                    <h2 class="content-text">Use the advanced search<br> to sort the albums by<br> sepcific criteria</h2>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 ">
+                <div class="vinyl-img4 project-image">
+                    <img src="/img/vinylshop/Screen Shot 2021-12-16 at 1.25.11 PM.png" height="300">
+                </div>
+            </div>
+        </div>
+        <div class="row item-b5">
+            <div class="col-lg-6 col-md-12">
+                <div class="vinyl-img5 project-image">
+                    <img src="/img/vinylshop/Screen Shot 2021-12-16 at 1.25.20 PM.png" height="250">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="vinyl-img5-text">
+                    <h2 class="content-text">You can choose which <br>decade you want to <br>see (sql query run)</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row item-b6">
+            <div class="col-lg-6 col-md-12">
+                <div class="vinyl-img6-text">
+                    <h2 class="content-text">All albums released<br> in the seventies!</h2>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="vinyl-img6 project-image">
+                    <img src="/img/vinylshop/Screen Shot 2021-12-16 at 1.25.30 PM.png" height="250">
+                </div>
+            </div>
+        </div>
+      </div>
+    </section>
+    <!--SECTION 3 END-->
+
+    <!--SECTION 4 START-->
+    <section id = "frank" class ="frank-project" style="background-color: black">
+        <div class="btn-group project-menu">
+            <a href="#friday" class="btn btn-primary " >New Music Friday</a>
+            <a href="#playlister" class="btn btn-primary">Playlister</a>
+            <a href="#vinylshop" class="btn btn-primary">VinylShop</a>
+            <a href="#frank" class="btn btn-primary active" aria-current="page">Music as Therapy</a>
+        </div>
+        <div class="container">
+            <div class="row">
+                <h3 class="description-text text-uppercase">Music as Therapy: Frank Ocean [HTML/CSS]</h2>
+                    <h2 class="content-text">This was my first project using HTML/CSS. There is also a very simple neural network algorithms
+                         incorporated into the website. The site's main function asks the users a series of questions, and based on the 
+                         answers it return a spotify playlist that would help them the most. There are a two other pages. One is based on the 
+                         idea of synesthesia (but in an opposite): the user selects a color they're feeling, and based on that color a video
+                         is automatically played. The other page is a page of clickable quotes where each quote is linked to it's respective songs. 
+                         I had a lot of fun exploring html and the art of front end designing. So, if you need some free therapy, go ahead and click
+                         <a class="frank-link" href="https://sabrinalem.github.io/frankocean-musictherapy/2menu.html">here</a>. Frank ocean
+                    </h2>
+                    <div class="frank-img">
+                        <a  href="https://sabrinalem.github.io/frankocean-musictherapy/2menu.html">
+                                <img  src="/img/frankmat.png" height="500"></a>
+                    </div>
+            </div>  
+    </section>
+    <!--SECTION 4 END-->
+
+<!-- END MAIN -->   
+    <!-- Jquery js file-->
+    <script src="/js/jquery.3.6.0.js"></script>
+
+    <!-- Bootstrap js file-->
+    <script src="/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
